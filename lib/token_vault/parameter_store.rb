@@ -2,8 +2,6 @@ require 'aws-sdk-core'
 
 module TokenVault
   class ParameterStore
-    @client = Aws::SSM::Client.new
-
     class << self
       def get_application_token(application_name, stage)
         parameter_name = stage.upcase
@@ -17,7 +15,8 @@ module TokenVault
       private
 
         def get_parameters(names, with_decryption = false)
-          resp = @client.get_parameters({
+          client = Aws::SSM::Client.new
+          resp = client.get_parameters({
             names: names,
             with_decryption: with_decryption,
           })
