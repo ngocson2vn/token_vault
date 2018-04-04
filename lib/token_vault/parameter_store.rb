@@ -5,9 +5,9 @@ module TokenVault
     @client = Aws::SSM::Client.new
 
     class << self
-      def get_application_token(service_name, stage)
+      def get_application_token(application_name, stage)
         parameter_name = stage.upcase
-        parameter_name.concat('_APPLICATION_TOKEN_').concat(service_name.upcase)
+        parameter_name.concat('_APPLICATION_TOKEN_').concat(application_name.upcase)
         p = get_parameters([parameter_name]).first
         application_token = nil
         application_token = p.value unless p.nil?
